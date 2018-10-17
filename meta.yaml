@@ -1,0 +1,36 @@
+package:
+  name:antibiogram
+  version:0.01
+
+source:
+  git_rev: master
+  git_url: https://github.com/glwinsor/antibiograms.git
+
+build:
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  host:
+    - python
+    - setuptools
+
+  run:
+    - python
+    - esearch
+    - efetch
+    - xtract
+    - os
+    - time
+    - re
+    - optparse
+
+test:
+  imports:
+    -
+
+about:
+  home: https://github.com/glwinsor/antibiograms
+  summary: "Antibiogram is a tool that takes a partial or complete organism name (e.g. genus, species and/or strain) and looks up all biosamples at NCBI that have antiogram. Loads data into Pseudomonas Genome Database."
+  license: MIT
+  license_file: LICENSE
