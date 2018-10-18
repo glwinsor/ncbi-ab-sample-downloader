@@ -104,10 +104,12 @@ def main():
 
             if options.assembly:
                 cmd2 = "esearch -db assembly -query "+biosample+" | efetch -format docsum | xtract -pattern DocumentSummary -def \"N/A\" -element AssemblyAccession AssemblyName AssemblyStatus SubmitterOrganization FtpPath_RefSeq > assembly.txt"
-                print(cmd2)
+                return2=1
                 # Keep running until you get a successful return code
-                while (os.system(cmd2)):
-                    print(cmd2)
+                while (return2!=0):
+                    print(cmd2)c
+                    return2=os.system(cmd2)
+
                 time.sleep(1)
                 with open('assembly.txt') as ab_file:
                     for ab_line in ab_file:
@@ -122,11 +124,11 @@ def main():
             sra_runs = []
             if options.sra:
                 cmd2 = "esearch -db sra -query " + biosample + " | efetch -format XML | xtract -pattern EXPERIMENT_PACKAGE -tab \"|\" -element EXPERIMENT@accession RUN@accession INSTRUMENT_MODEL > sra.txt"
-
-                print(cmd2)
+                return2 = 1
                 # Keep running until you get a successful return code
-                while (os.system(cmd2)):
+                while (return2 != 0):
                     print(cmd2)
+                    return2 = os.system(cmd2)
                 time.sleep(1)
 
                 with open('sra.txt') as sra_file:
@@ -155,8 +157,6 @@ def main():
                     phenotypes[biosample]['units'] = columns[4]
                     phenotypes[biosample]['lab_type_method'] = columns[5]
                     for value in columns[6:9]:
-
-
 
                         if value in laboratory_typing_platform:
                             phenotypes[biosample]['lab_typing_platform'] = value
@@ -272,10 +272,10 @@ def main():
                     f.write(str(phenotypes[biosample]['sign']) + "\t")
                     f.write(str(phenotypes[biosample]['measurement']) + "\t")
                     f.write(str(phenotypes[biosample]['units']) + "\t")
-                    f.write(str(phenotypes[biosample]['lab_type_method']) + "\t")
-                    f.write(str(phenotypes[biosample]['lab_typing_platform']) + "\t")
-                    f.write(str(phenotypes[biosample]['vendor']) + "\t")
-                    f.write(str(phenotypes[biosample]['lab_typing_method_version_or_reagent']) + "\n")
+                    f.write(str(phenotypes[biosample]['lab_type_method']).replace("None","") + "\t")
+                    f.write(str(phenotypes[biosample]['lab_typing_platform']).replace("None","") + "\t")
+                    f.write(str(phenotypes[biosample]['vendor']).replace("None","") + "\t")
+                    f.write(str(phenotypes[biosample]['lab_typing_method_version_or_reagent']).replace("None","") + "\n")
                     f.flush()
 
                     print(biosample, end="\t")
@@ -299,10 +299,10 @@ def main():
                     print(phenotypes[biosample]['sign'], end="\t")
                     print(phenotypes[biosample]['measurement'], end="\t")
                     print(phenotypes[biosample]['units'], end="\t")
-                    print(phenotypes[biosample]['lab_type_method'], end="\t")
-                    print(phenotypes[biosample]['lab_typing_platform'], end="\t")
-                    print(phenotypes[biosample]['vendor'], end="\t")
-                    print(phenotypes[biosample]['lab_typing_method_version_or_reagent'], end="\n")
+                    print(str(phenotypes[biosample]['lab_type_method']).replace("None",""), end="\t")
+                    print(str(phenotypes[biosample]['lab_typing_platform']).replace("None",""), end="\t")
+                    print(str(phenotypes[biosample]['vendor']).replace("None",""), end="\t")
+                    print(str(phenotypes[biosample]['lab_typing_method_version_or_reagent']).replace("None",""), end="\n")
 
     f.close()
 
