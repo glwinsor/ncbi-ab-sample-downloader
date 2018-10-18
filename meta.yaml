@@ -1,10 +1,12 @@
-package:
-  name:antibiogram
-  version:0.01
+{% set name = "ncbi-ab-sample-downloader" %}
+{% set version = "0.01" %}
 
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
 source:
   git_rev: master
-  git_url: https://github.com/glwinsor/antibiograms.git
+  git_url: https://github.com/glwinsor/ncbi-ab-sample-downloader.git
 
 build:
   number: 0
@@ -27,10 +29,10 @@ requirements:
 
 test:
   imports:
-    -
+    - ncbi-ab-sample-downloader
 
 about:
   home: https://github.com/glwinsor/antibiograms
-  summary: "Antibiogram is a tool that takes a partial or complete organism name (e.g. genus, species and/or strain) and looks up all biosamples at NCBI that have antiogram. Loads data into Pseudomonas Genome Database."
+  summary: "Download antibiograms from NCBI along with associated SRA or assembly metadata. Also loads this data into the Pseudomonas Genome Database."
   license: MIT
   license_file: LICENSE
