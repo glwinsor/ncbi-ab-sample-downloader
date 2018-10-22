@@ -107,7 +107,7 @@ def main():
                 return2=1
                 # Keep running until you get a successful return code
                 while (return2!=0):
-                    print(cmd2)c
+                    print(cmd2)
                     return2=os.system(cmd2)
 
                 time.sleep(1)
